@@ -1,0 +1,31 @@
+name: flutter_auth
+description: A new Flutter project.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.5
+  flutter_svg: ^2.0.10+1
+  get: ^4.6.5
+  odoo_rpc: ^0.5.4
+  shared_preferences: ^2.1.0
+  odoo_api_plus: any
+  carousel_slider: ^4.0.0
+  url_launcher: ^6.0.20 # Add this line
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.2
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
