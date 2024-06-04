@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_auth/Screens/brighter/Patient/patient_home.dart';
 import 'package:flutter_auth/Screens/brighter/TeleHealth/telehealth_home.dart';
 import 'package:flutter_auth/Screens/brighter/Prescription/prescription_home.dart'; // Fixed this line
 import 'package:flutter_auth/Screens/brighter/Treatment/treatment_home.dart';
 import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
-import 'package:flutter_auth/constants.dart';
 import 'package:get/get.dart';
 import 'Screens/Home/home.dart';
 import 'components/controllers.dart';
 import 'odoo_session_manager.dart';
+import 'constants.dart'; // Import the constants file
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Ensure Flutter is initialized
+
+  const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
+  const InitializationSettings initializationSettings = InitializationSettings(android: initializationSettingsAndroid);
+  flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
   runApp(const MyApp());
 }
 

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:odoo_rpc/odoo_rpc.dart';
-import 'package:flutter_auth/shared_pref.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_auth/constants.dart';
-import 'prescription_page.dart'; // Placeholder for prescription page
-import 'treatment_page.dart'; // Placeholder for treatment page
-import 'appointment_page.dart'; // Placeholder for appointment page
-import 'invoice_page.dart'; // Placeholder for invoice page
-import 'consent_page.dart'; // Placeholder for consent page
+import 'package:flutter_auth/shared_pref.dart';
+import 'package:odoo_rpc/odoo_rpc.dart';
 
 class PatientDetail extends StatefulWidget {
   final int patientId;
@@ -20,6 +16,7 @@ class PatientDetail extends StatefulWidget {
 
 class _PatientDetailState extends State<PatientDetail> {
   Map<String, dynamic>? _patient;
+  String? _lastNote;
   bool _loading = true;
   late String _baseUrl;
 
@@ -52,7 +49,28 @@ class _PatientDetailState extends State<PatientDetail> {
         ],
         'kwargs': {
           'context': {'bin_size': true},
-          'fields': ['name', 'code', 'gender', 'email', 'birthday', 'age', 'image_1920'],
+          'fields': [
+            'name', 'mobile', 'email', 'image_1920', 'street', 'city',
+            'state_id', 'zip', 'gender', 'birthday', 'age', 'allergies_ids', 'primary_physician_id'
+          ],
+          'limit': 1,
+        },
+      });
+
+      var noteRes = await client.callKw({
+        'model': 'mail.message',
+        'method': 'search_read',
+        'args': [
+          [
+            ['res_id', '=', widget.patientId],
+            ['model', '=', 'hms.patient']
+          ]
+        ],
+        'kwargs': {
+          'context': {'bin_size': true},
+          'fields': ['body'],
+          'order': 'date desc',
+          'limit': 1,
         },
       });
 
@@ -60,10 +78,14 @@ class _PatientDetailState extends State<PatientDetail> {
         if (res.isNotEmpty) {
           _patient = res[0];
         }
+        if (noteRes.isNotEmpty) {
+          _lastNote = noteRes[0]['body'];
+        }
         _loading = false;
       });
 
       print('Patient detail response: $res');
+      print('Patient last note response: $noteRes');
     } catch (e) {
       client.close();
       print('Error fetching patient detail: $e');
@@ -80,130 +102,228 @@ class _PatientDetailState extends State<PatientDetail> {
     }
   }
 
+  void _launchCaller(String? mobile) async {
+    if (mobile == null || mobile.isEmpty) return;
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: mobile,
+    );
+    await launchUrl(launchUri);
+  }
+
+  void _launchWhatsApp(String? mobile) async {
+    if (mobile == null || mobile.isEmpty) return;
+    final Uri launchUri = Uri(
+      scheme: 'https',
+      path: 'wa.me/$mobile',
+    );
+    await launchUrl(launchUri);
+  }
+
+  void _launchSMS(String? mobile) async {
+    if (mobile == null || mobile.isEmpty) return;
+    final Uri launchUri = Uri(
+      scheme: 'sms',
+      path: mobile,
+    );
+    await launchUrl(launchUri);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_patient?['name'] ?? 'Patient Detail'),
-      ),
-      body: _loading
-          ? const Center(child: CircularProgressIndicator())
-          : _patient == null
-              ? const Center(child: Text('Patient not found.'))
-              : Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ListView(
-                    children: <Widget>[
-                      Wrap(
-                        spacing: 10,
-                        runSpacing: 10,
-                        children: [
-                          _buildNavigationButton('Prescriptions', Icons.medical_services, () {
-                            Get.to(() => PrescriptionPage(patientId: widget.patientId));
-                          }),
-                          _buildNavigationButton('Treatments', Icons.local_hospital, () {
-                            Get.to(() => TreatmentPage(patientId: widget.patientId));
-                          }),
-                          _buildNavigationButton('Appointments', Icons.calendar_today, () {
-                            Get.to(() => AppointmentPage(patientId: widget.patientId));
-                          }),
-                          _buildNavigationButton('Invoices', Icons.receipt_long, () {
-                            Get.to(() => InvoicePage(patientId: widget.patientId));
-                          }),
-                          _buildNavigationButton('Consent', Icons.description, () {
-                            Get.to(() => ConsentPage(patientId: widget.patientId));
-                          }),
-                        ],
+      backgroundColor: const Color.fromARGB(255, 72, 75, 199),
+      body: SafeArea(
+        child: _loading
+            ? const Center(child: CircularProgressIndicator())
+            : _patient == null
+                ? const Center(child: Text('Patient not found.', style: TextStyle(color: Colors.white)))
+                : Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.arrow_back, color: Colors.white),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                            const Spacer(),
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 16),
-                      if (_patient!['image_1920'] != null)
-                        Card(
-                          elevation: 1,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Container(
-                              height: 150,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                    '$_baseUrl/web/image?model=hms.patient&id=${widget.patientId}&field=image_1920',
-                                  ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                CircleAvatar(
+                                  radius: 50,
+                                  backgroundImage: _patient!['image_1920'] != null
+                                      ? NetworkImage('$_baseUrl/web/image?model=hms.patient&id=${_patient!['id']}&field=image_1920')
+                                      : null,
+                                  child: _patient!['image_1920'] == null
+                                      ? Text(
+                                          _getInitials(_patient!['name']),
+                                          style: const TextStyle(color: Colors.white, fontSize: 24),
+                                        )
+                                      : null,
                                 ),
-                              ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  _patient!['name'] ?? 'Unnamed',
+                                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  _patient!['mobile'] ?? 'No mobile number',
+                                  style: const TextStyle(fontSize: 14, color: Colors.white70),
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  _patient!['email'] ?? 'No email',
+                                  style: const TextStyle(fontSize: 14, color: Colors.white70),
+                                ),
+                                const SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.call, color: Colors.green),
+                                      onPressed: () => _launchCaller(_patient!['mobile']),
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.message, color: Colors.blue),
+                                      onPressed: () => _launchWhatsApp(_patient!['mobile']),
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.sms, color: Colors.orange),
+                                      onPressed: () => _launchSMS(_patient!['mobile']),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 20),
+                                _buildDetailRow('Gender', _patient!['gender']?.toString()),
+                                _buildDetailRow('Date of Birth', _patient!['birthday']?.toString()),
+                                _buildDetailRow('Age', _patient!['age']?.toString()),
+                                _buildDetailRow('Prescriber', _getFieldValue(_patient!['primary_physician_id'])),
+                                _buildDetailRow('Allergies', _getAllergies(_patient!['allergies_ids'])),
+                                _buildDetailRow('Address', _buildAddress(_patient!)),
+                                if (_lastNote != null)
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 20),
+                                    child: Card(
+                                      color: Colors.white.withOpacity(0.1),
+                                      child: ListTile(
+                                        title: const Text('Notes', style: TextStyle(color: Colors.white)),
+                                        subtitle: Text(_lastNote ?? '', style: const TextStyle(color: Colors.white70)),
+                                      ),
+                                    ),
+                                  ),
+                              ],
                             ),
                           ),
                         ),
-                      const SizedBox(height: 16),
-                      _buildDetailCard('Name', _patient!['name']),
-                      _buildDetailCard('Code', _patient!['code']),
-                      _buildDetailCard('Gender', _patient!['gender']),
-                      _buildDetailCard('Email', _patient!['email']),
-                      _buildDetailCard('Birthday', _patient!['birthday']),
-                      _buildDetailCard('Age', _patient!['age'].toString()),
+                      ),
+                      const BottomNavBar(),
                     ],
                   ),
-                ),
+      ),
     );
   }
 
-  Widget _buildNavigationButton(String label, IconData icon, VoidCallback onPressed) {
-    return SizedBox(
-      width: 100, // Wider buttons
-      height: 80,
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: kPrimaryColor,
-          foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+  Widget _buildDetailRow(String label, String? value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontSize: 14, color: Colors.white70),
           ),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 30),
-            const SizedBox(height: 5),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 10), // Smaller font size
+          Flexible(
+            child: Text(
+              value ?? '',
+              style: const TextStyle(fontSize: 14, color: Colors.white),
+              textAlign: TextAlign.right,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildDetailCard(String label, String? value) {
-    return Card(
-      elevation: 1,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              label,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              value ?? 'N/A',
-              style: const TextStyle(fontSize: 16),
-            ),
-          ],
+  String _buildAddress(Map<String, dynamic> patient) {
+    List<String> addressComponents = [
+      patient['street'] ?? '',
+      patient['city'] ?? '',
+      _getFieldValue(patient['state_id']),
+      patient['zip'] ?? '',
+    ];
+    return addressComponents.where((c) => c.isNotEmpty).join(', ');
+  }
+
+  String _getFieldValue(dynamic field) {
+    if (field == null || field is! List || field.length < 2) {
+      return '';
+    }
+    return field[1].toString();
+  }
+
+  String _getAllergies(dynamic allergies) {
+    if (allergies == null || allergies is! List) {
+      return 'None';
+    }
+    return allergies.map((a) => _getFieldValue(a)).join(', ');
+  }
+
+  String _getInitials(String name) {
+    List<String> names = name.split(" ");
+    String initials = "";
+    for (var n in names) {
+      if (n.isNotEmpty) {
+        initials += n[0];
+      }
+    }
+    return initials;
+  }
+}
+
+class BottomNavBar extends StatelessWidget {
+  const BottomNavBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
         ),
-      ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: 'Patients',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.local_hospital),
+          label: 'TeleHealth',
+        ),
+      ],
+      currentIndex: 1,
+      selectedItemColor: Colors.amber[800],
+      onTap: (index) {
+        if (index == 0) {
+          Get.toNamed('/home');
+        } else if (index == 1) {
+          Get.toNamed('/patientHome');
+        } else if (index == 2) {
+          Get.toNamed('/teleHealthHome');
+        }
+      },
     );
   }
 }

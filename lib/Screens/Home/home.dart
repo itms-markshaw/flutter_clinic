@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:odoo_rpc/odoo_rpc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/controllers.dart';
 import '../../constants.dart';
@@ -88,6 +89,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<dynamic> _appointments = [];
+  List<dynamic> _filteredAppointments = [];
   bool _loading = true;
   late String _baseUrl;
 
@@ -95,6 +97,20 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _fetchAppointments();
+  }
+
+  void _filterAppointments(String query) {
+    setState(() {
+      _filteredAppointments = _appointments.where((appointment) {
+        final patientName = appointment['patient_id'] != null
+            ? appointment['patient_id'][1].toLowerCase()
+            : '';
+        final appointmentDate = appointment['date'] != null
+            ? DateTime.parse(appointment['date']).toLocal().toString().substring(0, 10)
+            : '';
+        return patientName.contains(query.toLowerCase()) || appointmentDate.contains(query);
+      }).toList();
+    });
   }
 
   Future<void> _fetchAppointments() async {
@@ -120,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         'kwargs': {
           'context': {'bin_size': true},
-          'fields': ['id', 'name', 'date', 'patient_id', 'mobile'],
+          'fields': ['id', 'name', 'date', 'patient_id', 'mobile', 'age', 'email'],
           'order': 'date asc',
           'limit': 3,
         },
@@ -128,6 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       setState(() {
         _appointments = res;
+        _filteredAppointments = res;
         _loading = false;
       });
 
@@ -161,6 +178,30 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void _launchCaller(String mobile) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: mobile,
+    );
+    await launch(launchUri.toString());
+  }
+
+  void _launchEmail(String email) async {
+    final Uri launchUri = Uri(
+      scheme: 'mailto',
+      path: email,
+    );
+    await launch(launchUri.toString());
+  }
+
+  void _launchSMS(String mobile) async {
+    final Uri launchUri = Uri(
+      scheme: 'sms',
+      path: mobile,
+    );
+    await launch(launchUri.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size; // this gonna give us total height and width of our device
@@ -187,9 +228,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     );
                   }),
+                  TextField(
+                    decoration: const InputDecoration(
+                      hintText: 'Search by patient or date',
+                      hintStyle: TextStyle(color: Colors.white54),
+                      prefixIcon: Icon(Icons.search, color: Colors.white54),
+                      border: InputBorder.none,
+                    ),
+                    style: const TextStyle(color: Colors.white),
+                    onChanged: _filterAppointments,
+                  ),
+                  const SizedBox(height: 10),
                   _loading
                       ? const Center(child: CircularProgressIndicator())
-                      : _appointments.isEmpty
+                      : _filteredAppointments.isEmpty
                           ? const Center(child: Text('No appointments found.', style: TextStyle(color: Colors.white)))
                           : Expanded(
                               child: ListView(
@@ -203,13 +255,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                   const SizedBox(height: 10),
-                                  ..._appointments.map((appointment) {
+                                  ..._filteredAppointments.map((appointment) {
                                     final patientName = appointment['patient_id'] != null
                                         ? appointment['patient_id'][1]
                                         : 'No Patient';
                                     final date = appointment['date'] != null
                                         ? DateTime.parse(appointment['date']).toLocal().toString().substring(0, 16)
                                         : 'No Date';
+                                    final mobile = appointment['mobile'] ?? 'N/A';
+                                    final age = appointment['age'] ?? 'N/A';
+                                    final email = appointment['email'] ?? 'N/A';
+
                                     return GestureDetector(
                                       onTap: () {
                                         Get.to(AppointmentDetail(appointmentId: appointment['id']));
@@ -235,30 +291,59 @@ class _HomeScreenState extends State<HomeScreen> {
                                               child: const Icon(Icons.calendar_today, color: Colors.white),
                                             ),
                                             const SizedBox(width: 12),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  appointment['name'],
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 14,
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    appointment['name'],
+                                                    style: const TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 14,
+                                                    ),
                                                   ),
+                                                  const SizedBox(height: 4),
+                                                  Text(
+                                                    'Patient: $patientName',
+                                                    style: const TextStyle(color: Colors.black87, fontSize: 12),
+                                                  ),
+                                                  const SizedBox(height: 4),
+                                                  Text(
+                                                    'Date: $date',
+                                                    style: const TextStyle(color: Colors.black87, fontSize: 12),
+                                                  ),
+                                                  const SizedBox(height: 4),
+                                                  Text(
+                                                    'Age: $age',
+                                                    style: const TextStyle(color: Colors.black87, fontSize: 12),
+                                                  ),
+                                                  const SizedBox(height: 4),
+                                                  Text(
+                                                    'Mobile: $mobile',
+                                                    style: const TextStyle(color: Colors.black87, fontSize: 12),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Column(
+                                              children: [
+                                                IconButton(
+                                                  icon: const Icon(Icons.phone, color: Colors.green),
+                                                  onPressed: () {
+                                                    _launchCaller(mobile);
+                                                  },
                                                 ),
-                                                const SizedBox(height: 4),
-                                                Text(
-                                                  'Patient: $patientName',
-                                                  style: const TextStyle(color: Colors.black87, fontSize: 12),
+                                                IconButton(
+                                                  icon: const Icon(Icons.email, color: Colors.blue),
+                                                  onPressed: () {
+                                                    _launchEmail(email);
+                                                  },
                                                 ),
-                                                const SizedBox(height: 4),
-                                                Text(
-                                                  'Date: $date',
-                                                  style: const TextStyle(color: Colors.black87, fontSize: 12),
-                                                ),
-                                                const SizedBox(height: 4),
-                                                Text(
-                                                  'Mobile: ${appointment['mobile'] ?? 'N/A'}',
-                                                  style: const TextStyle(color: Colors.black87, fontSize: 12),
+                                                IconButton(
+                                                  icon: const Icon(Icons.message, color: Colors.orange),
+                                                  onPressed: () {
+                                                    _launchSMS(mobile);
+                                                  },
                                                 ),
                                               ],
                                             ),

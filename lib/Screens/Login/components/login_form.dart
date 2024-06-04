@@ -89,7 +89,7 @@ class LoginForm extends StatelessWidget {
   }
 
   _doLogin(context) async{
-    const baseUrl='https://alkira.brighterapn.com';
+    const baseUrl='http://localhost:10016';
     const db='CALENDAR';
     final client = OdooClient(baseUrl);
     try {

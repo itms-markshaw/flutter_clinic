@@ -17,6 +17,9 @@ dependencies:
   odoo_api_plus: any
   carousel_slider: ^4.0.0
   url_launcher: ^6.0.20 # Add this line
+  flutter_secure_storage: ^5.0.2  # Added for secure storage
+  json_serializable: ^5.0.1
+  flutter_local_notifications: ^9.0.2
 
 dev_dependencies:
   flutter_test:
