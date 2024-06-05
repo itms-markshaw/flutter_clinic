@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:odoo_rpc/odoo_rpc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/controllers.dart';
@@ -42,41 +41,16 @@ class Home extends StatelessWidget {
     print('Session: $sobj');
     print('Base URL: $baseUrl');
 
-    final session = OdooSession.fromJson(sobj);
-    final client = OdooClient(baseUrl, session);
-    try {
-      var res = await client.callKw({
-        'model': 'res.users',
-        'method': 'search_read',
-        'args': [],
-        'kwargs': {
-          'context': {'bin_size': true},
-          'domain': [
-            ['id', '=', session.userId]
-          ],
-          'fields': ['id', 'name', '__last_update'],
-        },
-      });
+    final session = Map<String, dynamic>.from(sobj);
+    // Handle user fetching logic here if needed
 
-      print('User response: $res');
-
-      if (res.isNotEmpty) {
-        c.setCurrentUser(res[0]);
-        print('User data set in controller: ${c.currentUser.value}');
-      } else {
-        print('No user found with the given ID');
-      }
-    } catch (e) {
-      client.close();
-      print('Error fetching user data: $e');
-      showDialog(context: context, builder: (context) {
-        return SimpleDialog(
-          children: <Widget>[
-            Center(child: Text(e.toString()))
-          ],
-        );
-      });
-    }
+    c.setCurrentUser({
+      'name': session['name'],
+      'userLogin': session['userLogin'],
+      'baseUrl': baseUrl,
+      'sessionToken': session['session_sid'],
+      'db': session['db']
+    });
   }
 }
 
@@ -123,24 +97,24 @@ class _HomeScreenState extends State<HomeScreen> {
       return;
     }
 
-    final session = OdooSession.fromJson(sobj);
-    final client = OdooClient(_baseUrl, session);
+    final session = Map<String, dynamic>.from(sobj);
+    // Fetch appointments using session information
+
     try {
-      var res = await client.callKw({
-        'model': 'hms.appointment',
-        'method': 'search_read',
-        'args': [
-          [
-            ['date', '>', DateTime.now().toIso8601String()]
-          ]
-        ],
-        'kwargs': {
-          'context': {'bin_size': true},
-          'fields': ['id', 'name', 'date', 'patient_id', 'mobile', 'age', 'email'],
-          'order': 'date asc',
-          'limit': 3,
-        },
-      });
+      // Simulate fetching appointments
+      await Future.delayed(Duration(seconds: 2));
+      // Replace the following with actual API call
+      var res = [
+        {
+          'id': 1,
+          'name': 'Appointment 1',
+          'date': DateTime.now().add(Duration(days: 1)).toIso8601String(),
+          'patient_id': [1, 'John Doe'],
+          'mobile': '123456789',
+          'age': '25',
+          'email': 'john.doe@example.com'
+        }
+      ];
 
       setState(() {
         _appointments = res;
@@ -150,7 +124,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
       print('Appointments response: $res');
     } catch (e) {
-      client.close();
       print('Error fetching appointments: $e');
       showDialog(
         context: context,
@@ -225,6 +198,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                         const SizedBox(height: 20),
+                        SessionInfoCard(),
+                        const SizedBox(height: 10),
                       ],
                     );
                   }),
@@ -417,5 +392,65 @@ class Body extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class SessionInfoCard extends StatefulWidget {
+  @override
+  _SessionInfoCardState createState() => _SessionInfoCardState();
+}
+
+class _SessionInfoCardState extends State<SessionInfoCard> {
+  bool _isExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<Map<String, dynamic>?>(
+      future: _fetchSessionInfo(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else if (snapshot.hasData) {
+          final sessionInfo = snapshot.data!;
+          return Card(
+            child: Column(
+              children: [
+                ListTile(
+                  title: Text('Session Info'),
+                  trailing: IconButton(
+                    icon: Icon(_isExpanded ? Icons.expand_less : Icons.expand_more),
+                    onPressed: () {
+                      setState(() {
+                        _isExpanded = !_isExpanded;
+                      });
+                    },
+                  ),
+                ),
+                if (_isExpanded)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: sessionInfo.entries.map((entry) {
+                        return Text('${entry.key}: ${entry.value}');
+                      }).toList(),
+                    ),
+                  ),
+              ],
+            ),
+          );
+        } else {
+          return Text('No session info available');
+        }
+      },
+    );
+  }
+
+  Future<Map<String, dynamic>?> _fetchSessionInfo() async {
+    final prefs = SharedPref();
+    final session = await prefs.readObject('session');
+    return session != null ? Map<String, dynamic>.from(session) : null;
   }
 }

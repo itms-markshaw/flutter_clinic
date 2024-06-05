@@ -1,0 +1,37 @@
+{
+  "main_library": {
+    "exported_symbols": [
+      {
+        "data": {
+          "global": [
+            "_flutter_secure_storage_macosVersionNumber",
+            "_flutter_secure_storage_macosVersionString"
+          ],
+          "objc_class": [
+            "PodsDummy_flutter_secure_storage_macos",
+            "FlutterSecureStorageMacosPlugin"
+          ]
+        }
+      }
+    ],
+    "flags": [
+      {
+        "attributes": [
+          "not_app_extension_safe"
+        ]
+      }
+    ],
+    "install_names": [
+      {
+        "name": "@rpath/flutter_secure_storage_macos.framework/Versions/A/flutter_secure_storage_macos"
+      }
+    ],
+    "target_info": [
+      {
+        "min_deployment": "11",
+        "target": "arm64-macos"
+      }
+    ]
+  },
+  "tapi_tbd_version": 5
+}
