@@ -3,15 +3,15 @@
   "packages": [
     {
       "name": "_fe_analyzer_shared",
-      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-31.0.0",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-67.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "analyzer",
-      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/analyzer-2.8.0",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/analyzer-6.4.1",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "3.0"
     },
     {
       "name": "args",
@@ -24,6 +24,12 @@
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/async-2.11.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
+    },
+    {
+      "name": "bloc",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/bloc-8.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "boolean_selector",
@@ -39,9 +45,45 @@
     },
     {
       "name": "build_config",
-      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/build_config-1.0.0",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/build_config-1.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "build_daemon",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/build_daemon-4.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "build_resolvers",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/build_resolvers-2.4.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "build_runner",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/build_runner-2.4.10",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "build_runner_core",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/build_runner_core-7.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "built_collection",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/built_collection-5.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "built_value",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/built_value-8.9.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "carousel_slider",
@@ -62,16 +104,16 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "cli_util",
-      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/cli_util-0.3.5",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "clock",
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/clock-1.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "code_builder",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/code_builder-4.10.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "collection",
@@ -80,14 +122,38 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "connectivity_plus",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/connectivity_plus-5.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "connectivity_plus_platform_interface",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/connectivity_plus_platform_interface-1.2.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "convert",
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/convert-3.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
+      "name": "cookie_jar",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/cookie_jar-4.0.8",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
       "name": "crypto",
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/crypto-3.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "csslib",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/csslib-0.17.3",
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
@@ -99,15 +165,39 @@
     },
     {
       "name": "dart_style",
-      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/dart_style-2.2.1",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/dart_style-2.3.6",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "dbus",
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/dbus-0.7.10",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "diffutil_dart",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/diffutil_dart-4.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "dio",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/dio-5.4.3+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "dio_cookie_manager",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/dio_cookie_manager-3.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "equatable",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/equatable-2.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "fake_async",
@@ -128,10 +218,64 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "file_picker",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/file_picker-5.5.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "fixnum",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/fixnum-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "flutter",
       "rootUri": "file:///Users/markshaw/development/flutter/packages/flutter",
       "packageUri": "lib/",
       "languageVersion": "3.3"
+    },
+    {
+      "name": "flutter_bloc",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/flutter_bloc-8.1.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_chat_types",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/flutter_chat_types-3.6.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "flutter_chat_ui",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/flutter_chat_ui-1.6.13",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "flutter_hooks",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/flutter_hooks-0.20.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "flutter_html",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/flutter_html-3.0.0-beta.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "flutter_link_previewer",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/flutter_link_previewer-3.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "flutter_linkify",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/flutter_linkify-6.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
     },
     {
       "name": "flutter_lints",
@@ -156,6 +300,18 @@
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/flutter_local_notifications_platform_interface-5.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_parsed_text",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/flutter_parsed_text-2.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_plugin_android_lifecycle",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.20",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
     },
     {
       "name": "flutter_secure_storage",
@@ -212,6 +368,24 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "freezed",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/freezed-2.5.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "freezed_annotation",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/freezed_annotation-2.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "frontend_server_client",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/frontend_server_client-4.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "get",
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/get-4.6.6",
       "packageUri": "lib/",
@@ -224,14 +398,104 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "gql",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/gql-1.0.1-alpha+1715931674451",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "gql_dedupe_link",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/gql_dedupe_link-2.0.4-alpha+1715521079596",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "gql_error_link",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/gql_error_link-1.0.0+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "gql_exec",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/gql_exec-1.1.1-alpha+1699813812660",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "gql_http_link",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/gql_http_link-1.0.1+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.13"
+    },
+    {
+      "name": "gql_link",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/gql_link-1.0.1-alpha+1715521079517",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "gql_transform_link",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/gql_transform_link-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "graphql",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/graphql-5.2.0-beta.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "graphql_flutter",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/graphql_flutter-5.2.0-beta.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "graphs",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/graphs-2.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "hive",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/hive-2.2.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "html",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/html-0.15.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "http",
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/http-1.2.1",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
     {
+      "name": "http_multi_server",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/http_multi_server-3.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "http_parser",
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/http_parser-4.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "intl",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/intl-0.19.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "io",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/io-1.0.4",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -243,15 +507,15 @@
     },
     {
       "name": "json_annotation",
-      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/json_annotation-4.1.0",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/json_annotation-4.9.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "json_serializable",
-      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/json_serializable-5.0.2",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/json_serializable-6.8.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "leak_tracker",
@@ -272,10 +536,22 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "linkify",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/linkify-5.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
       "name": "lints",
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/lints-3.0.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "list_counter",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/list_counter-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
     },
     {
       "name": "logging",
@@ -302,6 +578,30 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "mime",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/mime-1.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "nested",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/nested-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "nm",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/nm-0.5.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "normalize",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/normalize-0.8.2+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "odoo_api_plus",
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/odoo_api_plus-0.1.1",
       "packageUri": "lib/",
@@ -312,6 +612,18 @@
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/odoo_rpc-0.5.4",
       "packageUri": "lib/",
       "languageVersion": "2.19"
+    },
+    {
+      "name": "odoochat",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/odoochat-2.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "open_filex",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/open_filex-4.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
     },
     {
       "name": "package_config",
@@ -330,6 +642,24 @@
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/path_parsing-1.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "path_provider",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/path_provider-2.1.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
+      "name": "path_provider_android",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/path_provider_android-2.2.5",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "path_provider_foundation",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
     },
     {
       "name": "path_provider_linux",
@@ -356,6 +686,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "photo_view",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/photo_view-0.15.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "platform",
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/platform-3.1.4",
       "packageUri": "lib/",
@@ -368,10 +704,22 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "pool",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/pool-1.5.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "process",
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/process-4.2.4",
       "packageUri": "lib/",
       "languageVersion": "2.14"
+    },
+    {
+      "name": "provider",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/provider-6.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "pub_semver",
@@ -382,6 +730,24 @@
     {
       "name": "pubspec_parse",
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/pubspec_parse-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "retrofit",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/retrofit-4.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "rxdart",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/rxdart-0.27.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "scroll_to_index",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/scroll_to_index-3.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -428,6 +794,18 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "shelf",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/shelf-1.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "shelf_web_socket",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/shelf_web_socket-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///Users/markshaw/development/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -435,15 +813,15 @@
     },
     {
       "name": "source_gen",
-      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/source_gen-1.2.2",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/source_gen-1.5.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "source_helper",
-      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/source_helper-1.3.2",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/source_helper-1.3.4",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.19"
     },
     {
       "name": "source_span",
@@ -462,6 +840,12 @@
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/stream_channel-2.1.2",
       "packageUri": "lib/",
       "languageVersion": "2.19"
+    },
+    {
+      "name": "stream_transform",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/stream_transform-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
     },
     {
       "name": "string_scanner",
@@ -488,8 +872,20 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "timing",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/timing-1.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
       "name": "typed_data",
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/typed_data-1.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "universal_io",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/universal_io-2.2.2",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -572,6 +968,18 @@
       "languageVersion": "2.14"
     },
     {
+      "name": "very_good_analysis",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/very_good_analysis-5.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "visibility_detector",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/visibility_detector-0.4.0+2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "vm_service",
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/vm_service-14.2.1",
       "packageUri": "lib/",
@@ -586,6 +994,12 @@
     {
       "name": "web",
       "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/web-0.5.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "web_socket_channel",
+      "rootUri": "file:///Users/markshaw/.pub-cache/hosted/pub.dev/web_socket_channel-2.4.5",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -620,7 +1034,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2024-06-04T11:54:45.171257Z",
+  "generated": "2024-06-05T08:42:24.169074Z",
   "generator": "pub",
   "generatorVersion": "3.4.1",
   "flutterRoot": "file:///Users/markshaw/development/flutter",

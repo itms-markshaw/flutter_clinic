@@ -778,13 +778,8 @@ file:///Users/markshaw/Desktop/flutter/lib/Screens/Welcome/components/login_sign
 file:///Users/markshaw/Desktop/flutter/lib/Screens/Welcome/components/welcome_image.dart
 file:///Users/markshaw/Desktop/flutter/lib/Screens/Welcome/welcome_screen.dart
 file:///Users/markshaw/Desktop/flutter/lib/Screens/brighter/Appointment/appointment_detail.dart
-file:///Users/markshaw/Desktop/flutter/lib/Screens/brighter/Patient/appointment_page.dart
-file:///Users/markshaw/Desktop/flutter/lib/Screens/brighter/Patient/consent_page.dart
-file:///Users/markshaw/Desktop/flutter/lib/Screens/brighter/Patient/invoice_page.dart
 file:///Users/markshaw/Desktop/flutter/lib/Screens/brighter/Patient/patient_detail.dart
 file:///Users/markshaw/Desktop/flutter/lib/Screens/brighter/Patient/patient_home.dart
-file:///Users/markshaw/Desktop/flutter/lib/Screens/brighter/Patient/prescription_page.dart
-file:///Users/markshaw/Desktop/flutter/lib/Screens/brighter/Patient/treatment_page.dart
 file:///Users/markshaw/Desktop/flutter/lib/Screens/brighter/Prescription/prescription_home.dart
 file:///Users/markshaw/Desktop/flutter/lib/Screens/brighter/TeleHealth/telehealth_home.dart
 file:///Users/markshaw/Desktop/flutter/lib/Screens/brighter/Treatment/treatment_home.dart

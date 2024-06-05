@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'package:flutter_auth/Screens/brighter/Patient/patient_home.dart';
 import 'package:flutter_auth/Screens/brighter/TeleHealth/telehealth_home.dart';
-import 'package:flutter_auth/Screens/brighter/Prescription/prescription_home.dart'; // Fixed this line
+import 'package:flutter_auth/Screens/brighter/Prescription/prescription_home.dart';
 import 'package:flutter_auth/Screens/brighter/Treatment/treatment_home.dart';
 import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
-import 'package:get/get.dart';
+import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/graphql_service.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'Screens/Home/home.dart';
 import 'components/controllers.dart';
 import 'odoo_session_manager.dart';
-import 'constants.dart'; // Import the constants file
-
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Ensure Flutter is initialized
-
-  const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
-  const InitializationSettings initializationSettings = InitializationSettings(android: initializationSettingsAndroid);
-  flutterLocalNotificationsPlugin.initialize(initializationSettings);
-
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize GraphQL client
+  final GraphQLClient client = await GraphQLService.initClient();
+  
+  runApp(MyApp(client: client));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final GraphQLClient client;
+
+  const MyApp({Key? key, required this.client}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +52,8 @@ class MyApp extends StatelessWidget {
           iconColor: kPrimaryColor,
           prefixIconColor: kPrimaryColor,
           contentPadding: EdgeInsets.symmetric(
-            horizontal: defaultPadding, 
-            vertical: defaultPadding
+            horizontal: defaultPadding,
+            vertical: defaultPadding,
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(30)),
@@ -80,82 +80,6 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/prescriptionHome', page: () => const PrescriptionHome()),
         GetPage(name: '/treatmentHome', page: () => const TreatmentHome()),
       ],
-    );
-  }
-}
-
-class LoginPage extends StatelessWidget {
-  final OdooSessionManager _sessionManager = OdooSessionManager();
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _dbNameController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _dbNameController,
-              decoration: InputDecoration(labelText: 'Database Name'),
-            ),
-            TextField(
-              controller: _usernameController,
-              decoration: InputDecoration(labelText: 'Username'),
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                try {
-                  await _sessionManager.login(
-                    _dbNameController.text,
-                    _usernameController.text,
-                    _passwordController.text,
-                  );
-                  Get.offNamed('/home');
-                } catch (e) {
-                  Get.snackbar('Error', 'Login failed');
-                }
-              },
-              child: Text('Login'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  final OdooSessionManager _sessionManager = OdooSessionManager();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () async {
-              await _sessionManager.logout();
-              Get.offAllNamed('/welcome');
-            },
-          ),
-        ],
-      ),
-      body: Center(
-        child: Text('Welcome to Odoo!'),
-      ),
     );
   }
 }

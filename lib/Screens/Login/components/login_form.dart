@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:odoo_rpc/odoo_rpc.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../../shared_pref.dart';
-import 'dart:io';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import '../../Signup/signup_screen.dart';
+
 final _usernameController = TextEditingController();
 final _passwordController = TextEditingController();
 
@@ -14,14 +15,6 @@ class LoginForm extends StatelessWidget {
   const LoginForm({
     Key? key,
   }) : super(key: key);
-
-//   @override
-//   State<LoginForm> createState() => _LoginFormState();
-// }
-
-// class _LoginFormState extends State<LoginForm> {
-//   final _usernameController = TextEditingController();
-//   final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -88,35 +81,63 @@ class LoginForm extends StatelessWidget {
     );
   }
 
-  _doLogin(context) async{
-    const baseUrl='http://localhost:10016';
-    const db='CALENDAR';
-    final client = OdooClient(baseUrl);
-    try {
-      final session = await client.authenticate(
-          db, 
-          _usernameController.text, 
-          _passwordController.text);
-      
-      final prefs = SharedPref();
-      prefs.saveObject('session', session); 
-      prefs.saveString('baseUrl', baseUrl);
-      prefs.saveString('db', db);
+  _doLogin(context) async {
+    const baseUrl = 'https://main.brighterapn.com';
+    const db = 'BRIGHTER-MS-2APRIL';
 
-      print("logged in");
+    final response = await http.post(
+      Uri.parse('$baseUrl/web/session/authenticate'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        "jsonrpc": "2.0",
+        "params": {
+          "db": db,
+          "login": _usernameController.text,
+          "password": _passwordController.text
+        }
+      }),
+    );
 
-      Get.toNamed("/home");
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      if (jsonResponse['result'] != null) {
+        final session = jsonResponse['result'];
+        
+        final prefs = SharedPref();
+        prefs.saveObject('session', session); 
+        prefs.saveString('baseUrl', baseUrl);
+        prefs.saveString('db', db);
 
-    } on Exception catch (e) {
-      client.close();
-      showDialog(context: context, builder: (context) {
-        return SimpleDialog(
-          children: <Widget>[
-            Center(child: Text(e.toString()))
-          ]);
-      });
+        print("Logged in");
+
+        Get.toNamed("/home");
+      } else {
+        _showErrorDialog(context, "Login failed");
+      }
+    } else {
+      _showErrorDialog(context, "Error: ${response.statusCode}");
     }
-    client.close();
+  }
 
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Error"),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 }
